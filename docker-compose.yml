@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastapi-code
+    restart: always
+    ports:
+      - 8000:8000
+    # env_file:
+    #   - .env
+    command: ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-c", "gunicorn_conf.py", "app.main:app"]
+    # command: ["uvicorn", "app.main:app", "--host=0.0.0.0", "--port=8000", "--workers=1", "--reload"]
+    volumes:
+      - ./:/app/
